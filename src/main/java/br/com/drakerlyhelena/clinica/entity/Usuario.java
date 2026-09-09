@@ -2,7 +2,6 @@ package br.com.drakerlyhelena.clinica.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "usuario")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Usuario {

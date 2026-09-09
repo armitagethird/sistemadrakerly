@@ -9,7 +9,6 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "paciente")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
