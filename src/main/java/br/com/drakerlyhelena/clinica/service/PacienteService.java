@@ -7,11 +7,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Transactional
 @Service
@@ -20,7 +19,7 @@ public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
 
-    public List<Paciente> findAll() {
+    public List<Paciente> buscarTodos() {
         return pacienteRepository.findAll();
     }
 
@@ -29,20 +28,28 @@ public class PacienteService {
                 .orElseThrow(() -> new EntityNotFoundException("Paciente " + id + "não encontrado"));
     }
 
-    }
-    public Paciente salvarPaciente(Paciente paciente) {
+    public Paciente salvar(Paciente paciente) {
         return pacienteRepository.save(paciente);
     }
 public void excluir(Long id) {
     try {
-        SimpleJpaRepository<Object, Object> pacienteRepository;
-        pacienteRepository.deleteById(id);
+        pacienteRepository.delete(buscarPorId(id));
         pacienteRepository.flush();
     } catch (DataIntegrityViolationException e) {
         throw new IllegalStateException("Paciente possui agendamentos e não pode ser excluído");
     }
 }
-
-
+    @Transactional
+    public Paciente atualizar(Long id, Paciente dados) {
+        Paciente paciente = buscarPorId(id);
+        paciente.setNome(dados.getNome());
+        paciente.setTelefone(dados.getTelefone());
+        paciente.setEmail(dados.getEmail());
+        return paciente;
+    }
 
 }
+
+
+
+

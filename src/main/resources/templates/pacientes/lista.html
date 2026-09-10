@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pacientes</title>
+</head>
+<body>
+
+<h1>Pacientes</h1>
+
+<a th:href="@{/pacientes/novo}">Novo paciente</a>
+
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>E-mail</th>
+        <th></th>
+    </tr>
+    <tr th:each="paciente : ${pacientes}">
+        <td th:text="${paciente.nome}"></td>
+        <td th:text="${paciente.telefone}"></td>
+        <td th:text="${paciente.email}"></td>
+        <td>
+            <a th:href="@{/pacientes/{id}/editar(id=${paciente.id})}">Editar</a>
+            <form method="post"
+                  th:action="@{/pacientes/{id}/excluir(id=${paciente.id})}"
+                  style="display:inline">
+                <button type="submit">Excluir</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
